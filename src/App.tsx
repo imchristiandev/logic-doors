@@ -28,9 +28,9 @@ function App() {
       <footer className="mt-12 text-center text-slate-600 font-mono text-xs space-y-1">
         <p className="text-slate-500">Developers</p>
         <p>Christian David Ramírez Bolívar</p>
-        <p>David Salamanca</p>
-        <p>Jenny Vallejos</p>
-        <p>Valentina</p>
+        <p>Jose David Salamanca Tobar</p>
+        <p>Jenny Alexandra Oliva Vallejos</p>
+        <p>Laura Valentina Ñustes Contento</p>
       </footer>
     </main>
   );
