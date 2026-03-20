@@ -1,5 +1,5 @@
-import { GATES_CONFIG } from "./constants/gates-config";
-import { StandardGateModule } from "./components/StandardGateModule";
+import { GATES_CONFIG } from "./config/gates.config";
+import { GateModule } from "./components/GateModule";
 
 function App() {
   return (
@@ -20,10 +20,18 @@ function App() {
         {/* Gates Grid */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           {GATES_CONFIG.map((config, idx) => (
-            <StandardGateModule key={idx} config={config} />
+            <GateModule key={idx} config={config} />
           ))}
         </div>
       </div>
+
+      <footer className="mt-12 text-center text-slate-600 font-mono text-xs space-y-1">
+        <p className="text-slate-500">Developers</p>
+        <p>Christian David Ramírez Bolívar</p>
+        <p>David Salamanca</p>
+        <p>Jenny Vallejos</p>
+        <p>Valentina</p>
+      </footer>
     </main>
   );
 }

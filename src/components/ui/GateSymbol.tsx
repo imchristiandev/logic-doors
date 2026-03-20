@@ -1,7 +1,7 @@
-type GateSymbolEnum = 'AND' |  'OR' | 'NOT' | 'NAND' | 'NOR';
+import type { GateType } from '../../types/gate.types';
 
 interface GateSymbolProps {
-  type: GateSymbolEnum;
+  type: GateType;
   activeOutput: boolean;
 }
 

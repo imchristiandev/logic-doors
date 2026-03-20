@@ -1,73 +1,83 @@
-# React + TypeScript + Vite
+# Logic Gates
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive digital logic gates explorer built with React, TypeScript, and Tailwind CSS. Toggle inputs, click truth table rows, and see the circuit respond in real time.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Interactive circuit visualization per gate (inputs → gate symbol → output)
+- Clickable truth tables — click any row to set inputs instantly
+- Glowing cyan visual feedback for active signals
+- Truth tables are **derived at runtime** from pure logic functions — never hardcoded
 
-## React Compiler
+## Gates included
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Gate | Inputs | Expression |
+|------|--------|------------|
+| AND  | 2      | Q = A · B  |
+| OR   | 2      | Q = A + B  |
+| NOT  | 1      | Q = Ā      |
+| NAND | 2      | Q = A · B̄  |
+| NOR  | 2      | Q = A + B̄  |
 
-## Expanding the ESLint configuration
+## Tech stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 19** + **TypeScript**
+- **Vite** — dev server and build
+- **Tailwind CSS** — styling
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Other scripts:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build    # type-check + production build
+npm run preview  # serve the production build locally
+npm run lint     # run ESLint
 ```
+
+## Project structure
+
+```
+src/
+  types/
+    gate.types.ts          # GateType, GateConfig, GateEquation — single source of truth
+  logic/
+    gates.ts               # Pure compute functions for each gate (GATE_FN record)
+    truthTable.ts          # deriveTable() — generates truth table from a compute function
+  config/
+    gates.config.ts        # Gate definitions: type, input count, equation metadata
+  components/
+    GateModule/
+      index.tsx            # Main gate card — dynamic N-input state, derives table via useMemo
+    ui/
+      GateSymbol.tsx       # SVG gate symbol, color-coded by output state
+      TruthTable.tsx       # Interactive table with active-row highlight
+      Equation.tsx         # Renders boolean equations with optional overline (negation)
+      Wire.tsx             # Animated wire segment
+      LogicBadge.tsx       # 0/1 badge with glow
+      ToggleSwitch.tsx     # Styled boolean toggle
+  App.tsx
+  main.tsx
+```
+
+### Dependency flow
+
+```
+types/  ←  logic/  ←  config/  ←  components/  ←  App
+```
+
+Config and logic layers never import from components.
+
+## Adding a new gate
+
+1. Add the gate type to `GateType` in [src/types/gate.types.ts](src/types/gate.types.ts).
+2. Add its compute function to `GATE_FN` in [src/logic/gates.ts](src/logic/gates.ts).
+3. Add its SVG symbol case to [src/components/ui/GateSymbol.tsx](src/components/ui/GateSymbol.tsx).
+4. Add an entry to `GATES_CONFIG` in [src/config/gates.config.ts](src/config/gates.config.ts).
+
+No changes to `GateModule` or `App` are needed — the truth table is derived automatically.
