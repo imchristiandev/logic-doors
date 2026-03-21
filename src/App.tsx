@@ -1,5 +1,6 @@
 import { GATES_CONFIG } from "./config/gates.config";
 import { GateModule } from "./components/GateModule";
+import { MuxCircuit } from "./components/CircuitDiagram/MuxCircuit";
 
 function App() {
   return (
@@ -22,6 +23,15 @@ function App() {
           {GATES_CONFIG.map((config, idx) => (
             <GateModule key={idx} config={config} />
           ))}
+        </div>
+
+        {/* Circuit Schema */}
+        <div className="mt-8">
+          <h2 className="text-xl font-bold text-slate-200 tracking-tight mb-4">
+            Circuit Schema{" "}
+            <span className="text-cyan-400 font-mono text-base">example</span>
+          </h2>
+          <MuxCircuit />
         </div>
       </div>
 
