@@ -10,7 +10,7 @@ function App() {
         <header className="mb-10 text-center space-y-2">
           <h1 className="text-3xl font-bold text-slate-200 tracking-tight">
             Logic gates{" "}
-            <span className="text-cyan-400 font-mono">v1.0</span>
+            <span className="text-cyan-400 font-mono">v2.0</span>
           </h1>
           <p className="text-slate-500 font-mono text-sm">
             Interactive Digital Logic Gates &bull; Click Truth Tables to Set
